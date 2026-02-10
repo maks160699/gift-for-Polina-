@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <meta property="og:title" content="С 8 Марта ✨">
+    <meta property="og:description" content="Маленький сюрприз для тебя">
+    <meta property="og:image" content="https://i.pinimg.com/1200x/2c/b5/b3/2cb5b3aafd0fa5e8321b598a3ef37bd7.jpg">
+    
+    <title>Для тебя ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:italic,wght@400;700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --pink-bg: #fdf2f2;
+            --accent-pink: #e5b3b3;
+            --text-dark: #6b5b5b;
+            --glass: rgba(255, 255, 255, 0.82);
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            background-color: var(--pink-bg);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            /* Отступ под системные элементы iPhone */
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        /* Плавающие элементы */
+        .floating-item {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.4;
+            will-change: transform;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px 15px 100px 15px; /* Нижний отступ увеличен под кнопку */
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            /* Анимация входа специально для iOS */
+            animation: iphoneEntrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .letter-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px); /* Для поддержки Safari на iPhone */
+            padding: 30px 20px;
+            border-radius: 35px;
+            border: 1px solid white;
+            box-shadow: 0 20px 45px rgba(229, 179, 179, 0.3);
+        }
+
+        .main-img {
+            width: 100%;
+            border-radius: 22px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.4s ease;
+        }
+
+        h1 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 2.2rem; 
+            margin-bottom: 15px; 
+            color: #8b7676;
+            font-weight: 400;
+        }
+
+        p { 
+            font-size: 0.95rem; 
+            line-height: 1.7; 
+            margin-bottom: 18px; 
+            font-weight: 300; 
+            padding: 0 10px;
+        }
+
+        /* Музыкальная кнопка - перенесена вниз для удобства пальца */
+        .music-btn {
+            position: fixed;
+            bottom: 30px; 
+            right: 25px;
+            background: white;
+            border: 1px solid var(--accent-pink);
+            border-radius: 50px;
+            padding: 12px 22px;
+            cursor: pointer;
+            z-index: 1000;
+            color: var(--accent-pink);
+            font-family: inherit;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .music-btn:active {
+            transform: scale(0.9);
+        }
+
+        .btn-reply {
+            display: inline-block;
+            background: var(--accent-pink);
+            color: white;
+            padding: 16px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.75rem;
+            transition: 0.4s;
+            box-shadow: 0 5px 15px rgba(229, 179, 179, 0.4);
+        }
+
+        .btn-reply:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes iphoneEntrance {
+            from { opacity: 0; transform: scale(0.95) translateY(30px); filter: blur(5px); }
+            to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+        }
+
+        #sparkle-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 5; }
+
+        /* Эффект следа за пальцем */
+        .trail-sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1001;
+            font-size: 10px;
+            animation: flyOut 0.8s linear forwards;
+        }
+
+        @keyframes flyOut {
+            to { transform: translateY(20px); opacity: 0; }
+        }
+
+        /* Адаптация под очень маленькие экраны */
+        @media (max-width: 380px) {
+            h1 { font-size: 1.8rem; }
+            p { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="music-btn" id="mBtn" onclick="toggleMusic()">🎵 Музыка</button>
+    
+    <audio id="bgMusic" loop playsinline>
+        <source src="madrugada.mp3" type="audio/mpeg">
+    </audio>
+
+    <canvas id="sparkle-canvas"></canvas>
+
+    <div class="container">
+        <div class="letter-card">
+            <img src="https://i.pinimg.com/1200x/2c/b5/b3/2cb5b3aafd0fa5e8321b598a3ef37bd7.jpg" class="main-img" alt="Spring">
+            
+            <h1>С 8 Марта</h1>
+            <p>Я хотел, чтобы этот день начался для тебя с чего-то красивого. Этот маленький сайт — мой способ быть рядом, не нарушая твои границы.</p>
+            <p>Пусть в твоей душе всегда будет весна, а в жизни — столько же нежности, сколько в этих картинках. Ты удивительная.</p>
+            
+            <a href="https://t.me/max_tttttt" class="btn-reply">Сказать спасибо</a>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('bgMusic');
+        const mBtn = document.getElementById('mBtn');
+        
+        function toggleMusic() {
+            if (audio.paused) { 
+                audio.play(); 
+                mBtn.innerHTML = "⏸ Пауза";
+                mBtn.style.background = "var(--accent-pink)";
+                mBtn.style.color = "white";
+            } else { 
+                audio.pause(); 
+                mBtn.innerHTML = "🎵 Музыка";
+                mBtn.style.background = "white";
+                mBtn.style.color = "var(--accent-pink)";
+            }
+        }
+
+        // След за пальцем/курсором
+        const createTrail = (x, y) => {
+            const el = document.createElement('div');
+            el.className = 'trail-sparkle';
+            el.innerHTML = '✨';
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 800);
+        };
+
+        window.addEventListener('mousemove', (e) => createTrail(e.clientX, e.clientY));
+        window.addEventListener('touchmove', (e) => createTrail(e.touches[0].clientX, e.touches[0].clientY));
+
+        // Летающие элементы
+        const items = ['🌸', '🦌', '✨', '🌷', '🌿'];
+        for (let i = 0; i < 15; i++) {
+            let div = document.createElement('div');
+            div.className = 'floating-item';
+            div.innerHTML = items[Math.floor(Math.random() * items.length)];
+            div.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            div.style.left = Math.random() * 100 + 'vw';
+            div.style.top = Math.random() * 100 + 'vh';
+            document.body.appendChild(div);
+            animateItem(div);
+        }
+
+        function animateItem(el) {
+            let x = parseFloat(el.style.left);
+            let y = parseFloat(el.style.top);
+            let dx = (Math.random() - 0.5) * 0.15;
+            let dy = (Math.random() - 0.5) * 0.15;
+            function frame() {
+                x += dx; y += dy;
+                if (x < -10) x = 105; if (x > 105) x = -10;
+                if (y < -10) y = 105; if (y > 105) y = -10;
+                el.style.left = x + 'vw'; el.style.top = y + 'vh';
+                requestAnimationFrame(frame);
+            }
+            frame();
+        }
+
+        // Золотые искорки на фоне
+        const canvas = document.getElementById('sparkle-canvas');
+        const ctx = canvas.getContext('2d');
+        const resize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+        window.addEventListener('resize', resize);
+        resize();
+
+        let sparkles = [];
+        for(let i=0; i<40; i++) {
+            sparkles.push({
+                x: Math.random() * canvas.width,
+                y: canvas.height + Math.random() * 100,
+                s: Math.random() * 1.5,
+                sp: Math.random() * 0.8 + 0.3
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            ctx.fillStyle = "#d4a373";
+            sparkles.forEach(s => {
+                ctx.beginPath(); 
+                ctx.arc(s.x, s.y, s.s, 0, Math.PI*2); 
+                ctx.fill();
+                s.y -= s.sp; 
+                if(s.y < -10) s.y = canvas.height + 10;
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+</body>
+</html>
